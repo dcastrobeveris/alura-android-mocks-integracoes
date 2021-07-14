@@ -30,6 +30,7 @@ import android.view.Display;
 import junit.framework.TestCase;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,7 +50,7 @@ public class ListaLeilaoAdapterTest {
 
     @Test
     public void deve_AtualizarListaDeLeiloes_QuandoReceberListaDeLeiloes(){
-        ListaLeilaoAdapter adapter = new ListaLeilaoAdapter(new Context() {
+        ListaLeilaoAdapter adapter = Mockito.spy(new ListaLeilaoAdapter(new Context() {
             @Override
             public AssetManager getAssets() {
                 return null;
@@ -574,7 +575,8 @@ public class ListaLeilaoAdapterTest {
             public boolean isDeviceProtectedStorage() {
                 return false;
             }
-        });
+        }));
+        Mockito.doNothing().when(adapter).atualizaLista();
 
         adapter.atualiza(new ArrayList<>(Arrays.asList(
                 new Leilao("Console"),
